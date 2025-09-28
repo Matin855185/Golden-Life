@@ -1,17 +1,33 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import LazyImage from './LazyImage';
 import LazySection from './LazySection';
 
 export default function AllProperties() {
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState('all');
   const [likedProperties, setLikedProperties] = useState(new Set());
   const [sortBy, setSortBy] = useState('newest');
   const [priceRange, setPriceRange] = useState('all');
   const [areaRange, setAreaRange] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const propertiesPerPage = 9;
+  const [viewMode, setViewMode] = useState('grid'); // grid, list, map
+  const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDistricts, setSelectedDistricts] = useState([]);
+  const [propertyType, setPropertyType] = useState('all');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [minArea, setMinArea] = useState('');
+  const [maxArea, setMaxArea] = useState('');
+  const [rooms, setRooms] = useState('all');
+  const [hasParking, setHasParking] = useState('all');
+  const [buildingAge, setBuildingAge] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
+  const propertiesPerPage = 12;
 
   // داده‌های کامل املاک (بیشتر از صفحه اصلی)
   const allProperties = [
@@ -20,14 +36,31 @@ export default function AllProperties() {
       type: 'آپارتمان',
       dealType: 'فروش',
       location: 'تهران - نیاوران',
+      district: 'نیاوران',
       price: '15,500',
       area: '120',
       rooms: '3',
       year: '1402',
       floor: '5',
+      totalFloors: '8',
       parking: true,
+      elevator: true,
+      balcony: true,
+      storage: true,
+      furnished: false,
       image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=300&fit=crop',
-      isVip: true
+      images: [
+        'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop'
+      ],
+      isVip: true,
+      agent: 'احمد محمدی',
+      agentPhone: '09123456789',
+      description: 'آپارتمان لوکس در بهترین منطقه نیاوران با امکانات کامل',
+      features: ['آسانسور', 'پارکینگ', 'انباری', 'بالکن', 'نگهبانی 24 ساعته'],
+      viewCount: 245,
+      publishDate: '1403/01/15'
     },
     {
       id: 2,
@@ -210,6 +243,10 @@ export default function AllProperties() {
     });
   };
 
+  const handleViewDetails = (propertyId) => {
+    router.push(`/property/${propertyId}`);
+  };
+
   // فیلتر کردن املاک
   const filteredProperties = allProperties.filter(property => {
     // فیلتر نوع معامله
@@ -276,7 +313,7 @@ export default function AllProperties() {
         {/* هدر صفحه */}
         <div className="page-header">
           <div className="breadcrumb">
-            <a href="/" className="breadcrumb-link">خانه</a>
+            <Link href="/" className="breadcrumb-link">خانه</Link>
             <i className="fas fa-chevron-left"></i>
             <span className="breadcrumb-current">همه آگهی‌ها</span>
           </div>
@@ -391,6 +428,8 @@ export default function AllProperties() {
                   src={property.image} 
                   alt={`${property.type} در ${property.location}`}
                   className="property-img"
+                  width={400}
+                  height={300}
                 />
                 <div className="property-price-overlay">
                   <span className="price-overlay-text">
@@ -398,7 +437,10 @@ export default function AllProperties() {
                   </span>
                 </div>
                 <div className="property-overlay">
-                  <button className="view-details-btn">
+                  <button 
+                    className="view-details-btn"
+                    onClick={() => handleViewDetails(property.id)}
+                  >
                     <i className="fas fa-eye"></i>
                     مشاهده جزئیات
                   </button>

@@ -185,21 +185,74 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Counter Animation for Statistics (if added later)
-    function animateCounter(element, target, duration = 2000) {
+    // Counter Animation for Statistics
+    function animateCounter(element, target, duration = 2000, suffix = '', isSpecial = false) {
         let start = 0;
         const increment = target / (duration / 16);
         
         const timer = setInterval(() => {
             start += increment;
-            element.textContent = Math.floor(start);
+            const currentValue = Math.floor(start);
+            
+            if (isSpecial) {
+                element.textContent = currentValue + suffix;
+            } else {
+                element.textContent = currentValue + suffix;
+            }
             
             if (start >= target) {
-                element.textContent = target;
+                element.textContent = target + suffix;
                 clearInterval(timer);
             }
         }, 16);
     }
+
+    // Statistics Counter Animation Observer
+    const statsObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                console.log('Stats section is visible, starting animation...');
+                const statNumbers = entry.target.querySelectorAll('.stat-number');
+                console.log('Found stat numbers:', statNumbers.length);
+                
+                statNumbers.forEach((statNumber, index) => {
+                    const target = parseInt(statNumber.getAttribute('data-target'));
+                    const suffix = statNumber.getAttribute('data-suffix') || '';
+                    const isSpecial = statNumber.getAttribute('data-special') === 'true';
+                    
+                    console.log(`Animating counter ${index + 1}: target=${target}, suffix=${suffix}`);
+                    
+                    // Add a slight delay for each counter to create a staggered effect
+                    setTimeout(() => {
+                        animateCounter(statNumber, target, 2000, suffix, isSpecial);
+                    }, index * 300);
+                });
+                
+                // Unobserve after animation starts to prevent re-triggering
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Function to initialize stats animation
+    function initStatsAnimation() {
+        const statsContainer = document.querySelector('.stats-container');
+        console.log('Looking for stats container:', statsContainer);
+        
+        if (statsContainer) {
+            console.log('Stats container found, setting up observer...');
+            statsObserver.observe(statsContainer);
+        } else {
+            console.log('Stats container not found, retrying in 1 second...');
+            setTimeout(initStatsAnimation, 1000);
+        }
+    }
+
+    // Initialize stats animation
+    initStatsAnimation();
 
     // Initialize Google Map (placeholder)
     function initMap() {

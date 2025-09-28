@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import LazyImage from './LazyImage';
 import LazySection from './LazySection';
 
@@ -119,43 +120,47 @@ export default function ServicesSection() {
                 key={index}
                 animationType="scaleIn"
                 delay={index * 100}
-                className="service-card-new"
+                className="service-card-compact"
               >
-                <div className="service-image-container">
+                <div className="service-card-background">
                   <LazyImage 
                     src={service.image} 
                     alt={service.title}
-                    className="service-image"
-                    placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDQwMCAyNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yMDAgMTI1TDE3NSAxMDBIMjI1TDIwMCAxMjVaIiBmaWxsPSIjRDBEMEQwIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOTk5OTk5IiBmb250LXNpemU9IjE0Ij5Loading...</dGV4dD4KPC9zdmc+"
+                    className="service-bg-image"
+                    placeholder="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI4MCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMWExYTFhIi8+CjxjaXJjbGUgY3g9IjE0MCIgY3k9IjEwMCIgcj0iMjAiIGZpbGw9IiMzMzMzMzMiLz4KPC9zdmc+"
                   />
-                  <div className="service-overlay">
-                    <div 
-                      className="service-icon-new"
-                      style={{ background: service.gradient }}
-                    >
-                      <i className={service.icon}></i>
-                    </div>
-                  </div>
-                </div>
-              
-                <div className="service-content-new">
-                  <h3 className="service-title-new">{service.title}</h3>
-                  <p className="service-description-new">{service.description}</p>
-                  
-                  <div className="service-actions">
-                    <button className="service-btn-primary">
-                      <i className="fas fa-phone"></i>
-                      درخواست خدمت
-                    </button>
-                    <button className="service-btn-secondary">
-                      <i className="fas fa-info-circle"></i>
-                      جزئیات بیشتر
-                    </button>
-                  </div>
+                  <div className="service-overlay"></div>
                 </div>
                 
-                <div className="service-badge">
-                  <span>VIP</span>
+                <div className="service-card-glow"></div>
+                
+                <div className="service-header-compact">
+                  <div 
+                    className="service-icon-compact"
+                    style={{ background: service.gradient }}
+                  >
+                    <i className={service.icon}></i>
+                  </div>
+                  <div className="service-badge-compact">
+                    <i className="fas fa-crown"></i>
+                    VIP
+                  </div>
+                </div>
+
+                <div className="service-content-compact">
+                  <h3 className="service-title-compact">{service.title}</h3>
+                  <p className="service-description-compact">{service.description}</p>
+                  
+                  <div className="service-actions-compact">
+                    <button className="service-btn-compact primary">
+                      <i className="fas fa-phone"></i>
+                      درخواست
+                    </button>
+                    <button className="service-btn-compact secondary">
+                      <i className="fas fa-info"></i>
+                      جزئیات
+                    </button>
+                  </div>
                 </div>
               </LazySection>
             ))}
@@ -164,7 +169,7 @@ export default function ServicesSection() {
           {/* VIP Services Request Button */}
           <LazySection animationType="fadeInUp" delay={300}>
             <div className="vip-services-cta">
-              <a href="/vip-services" className="vip-services-btn">
+              <Link href="/vip-services" className="vip-services-btn">
                 <div className="vip-btn-bg"></div>
                 <div className="vip-btn-content">
                   <div className="vip-btn-icon">
@@ -180,7 +185,7 @@ export default function ServicesSection() {
                 </div>
                 <div className="vip-btn-shimmer"></div>
                 <div className="vip-btn-glow"></div>
-              </a>
+              </Link>
             </div>
           </LazySection>
         </div>

@@ -8,6 +8,8 @@ export default function LazyImage({
   alt, 
   className = '', 
   placeholder = '/placeholder.jpg',
+  width = 400,
+  height = 300,
   ...props 
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -59,10 +61,11 @@ export default function LazyImage({
         <Image
           src={src}
           alt={alt}
+          width={width}
+          height={height}
           onLoad={handleLoad}
           className={`lazy-image ${isLoaded ? 'loaded' : 'loading'}`}
-          fill
-          sizes="100vw"
+          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
         />
       )}
       

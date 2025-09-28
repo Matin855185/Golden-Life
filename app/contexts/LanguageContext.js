@@ -20,10 +20,11 @@ export const LanguageProvider = ({ children }) => {
     // بارگذاری زبان از localStorage
     const savedLanguage = localStorage.getItem('language') || 'fa';
     setLanguage(savedLanguage);
-    setIsRTL(savedLanguage === 'fa');
+    // همیشه RTL باقی بمونه
+    setIsRTL(true);
     
-    // اعمال direction به body
-    document.documentElement.dir = savedLanguage === 'fa' ? 'rtl' : 'ltr';
+    // همیشه RTL - چینش عوض نشه
+    document.documentElement.dir = 'rtl';
     document.documentElement.lang = savedLanguage;
     
     // اضافه کردن کلاس زبان به body
@@ -33,7 +34,8 @@ export const LanguageProvider = ({ children }) => {
 
   const toggleLanguage = () => {
     const newLanguage = language === 'fa' ? 'en' : 'fa';
-    const newIsRTL = newLanguage === 'fa';
+    // همیشه RTL باقی بمونه - چینش عوض نشه
+    const newIsRTL = true;
     
     setLanguage(newLanguage);
     setIsRTL(newIsRTL);
@@ -41,8 +43,8 @@ export const LanguageProvider = ({ children }) => {
     // ذخیره در localStorage
     localStorage.setItem('language', newLanguage);
     
-    // اعمال تغییرات به DOM
-    document.documentElement.dir = newIsRTL ? 'rtl' : 'ltr';
+    // همیشه RTL باقی بمونه - فقط زبان متن‌ها عوض بشه
+    document.documentElement.dir = 'rtl';
     document.documentElement.lang = newLanguage;
     
     // تغییر کلاس body

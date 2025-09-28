@@ -3,11 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ['images.unsplash.com'],
-    unoptimized: true
+    unoptimized: false,
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   outputFileTracingRoot: __dirname,
   experimental: {
     optimizeCss: true,
+    optimizePackageImports: ['lucide-react'],
     turbo: {
       rules: {
         '*.svg': {

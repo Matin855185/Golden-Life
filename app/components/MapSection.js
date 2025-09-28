@@ -13,6 +13,8 @@ export default function MapSection() {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [currentTileLayer, setCurrentTileLayer] = useState(null);
 
   // Sample property data
   const properties = [
@@ -22,6 +24,34 @@ export default function MapSection() {
     { id: 4, lat: 35.8058, lng: 51.4264, price: '45 میلیون', type: 'اجاره', title: 'آپارتمان زعفرانیه' },
   ];
 
+  // Theme detection and listener
+  useEffect(() => {
+    // Check initial theme
+    const checkTheme = () => {
+      const isLight = document.body.classList.contains('light-mode');
+      setIsDarkMode(!isLight);
+    };
+    
+    checkTheme();
+    
+    // Listen for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          checkTheme();
+        }
+      });
+    });
+    
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+
+  // Map initialization
   useEffect(() => {
     const initMap = async () => {
       await loadLeaflet();
@@ -36,6 +66,36 @@ export default function MapSection() {
     };
   }, []);
 
+  // Update map theme when isDarkMode changes
+  useEffect(() => {
+    if (!map || !window.L) return;
+    
+    // Remove current tile layer
+    if (currentTileLayer) {
+      map.removeLayer(currentTileLayer);
+    }
+    
+    // Add appropriate tile layer based on theme
+    let newTileLayer;
+    if (isDarkMode) {
+      // Dark theme - use dark tiles
+      newTileLayer = window.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+      });
+    } else {
+      // Light theme - use light tiles
+      newTileLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      });
+    }
+    
+    newTileLayer.addTo(map);
+    setCurrentTileLayer(newTileLayer);
+  }, [map, isDarkMode]); // Remove currentTileLayer from dependency array
+
+  // Load Leaflet dynamically
   const loadLeaflet = async () => {
     if (typeof window === 'undefined') return;
     
@@ -62,8 +122,6 @@ export default function MapSection() {
     }
   };
 
-  // loadMapbox removed - now using MapboxMap component
-
   const initializeLeafletMap = () => {
     if (!mapRef.current || !window.L) {
       console.log('Map container or Leaflet not ready');
@@ -81,15 +139,28 @@ export default function MapSection() {
         scrollWheelZoom: true
       });
 
-      // Add dark theme tile layer
-      window.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19
-      }).addTo(mapInstance);
-
       setMap(mapInstance);
       setIsMapLoaded(true);
+      
+      // Add appropriate tile layer based on current theme
+      let tileLayer;
+      if (isDarkMode) {
+        // Dark theme - use dark tiles
+        tileLayer = window.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          subdomains: 'abcd',
+          maxZoom: 19
+        });
+      } else {
+        // Light theme - use light tiles
+        tileLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          maxZoom: 19
+        });
+      }
+      
+      tileLayer.addTo(mapInstance);
+      setCurrentTileLayer(tileLayer);
       
       // Force map to recalculate size
       setTimeout(() => {

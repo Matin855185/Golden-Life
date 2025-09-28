@@ -8,12 +8,12 @@ const vazirmatn = Vazirmatn({
 });
 
 export const metadata = {
-  title: "گلدن لایف - خدمات VIP",
-  description: "تجربه‌ای منحصر به فرد از خدمات VIP",
+  title: "Golden Life",
+  description: "بهترین پلتفرم خرید و فروش املاک با خدمات VIP",
   icons: {
-    icon: '/SiteLogo.png.png',
-    shortcut: '/SiteLogo.png.png',
-    apple: '/SiteLogo.png.png',
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/apple-touch-icon.png',
   },
 };
 
@@ -21,6 +21,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl">
       <head>
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon.png" />
+        <link rel="shortcut icon" href="/icon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link 

@@ -84,13 +84,38 @@ export default function Header() {
               </div>
             </div>
           </div>
+
+          {/* Right Navigation - Authentication */}
+          <div className="nav-right">
+            <button onClick={() => window.location.href = '/authentication'} className="nav-link auth-btn register-btn">
+              <i className="fas fa-user-plus"></i>
+              {t('register') || 'ثبت نام'}
+            </button>
+            <button onClick={() => window.location.href = '/authentication'} className="nav-link auth-btn login-btn">
+              <i className="fas fa-user"></i>
+              {t('login') || 'ورود'}
+            </button>
+          </div>
           
           {/* Left Navigation - Settings */}
           <div className="nav-left">
-            <button onClick={toggleTheme} className="nav-link nav-btn">
-              <i className={`fas ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
-              {isDarkMode ? t('light_mode') : t('dark_mode')}
-            </button>
+            <div className="toggle-btn-container">
+              <button 
+                onClick={toggleTheme} 
+                className={`theme-toggle-btn ${!isDarkMode ? 'light-mode' : ''}`}
+              >
+                <div className="theme-content">
+                  <div className={`theme-icon ${isDarkMode ? 'sun-icon' : 'moon-icon'}`}>
+                  </div>
+                  <div className="theme-text">
+                    {isDarkMode ? 'Light' : 'Dark'}
+                  </div>
+                </div>
+              </button>
+              <div className="toggle-tooltip">
+                {isDarkMode ? 'حالت روز' : 'حالت شب'}
+              </div>
+            </div>
             <LanguageToggle />
           </div>
 
@@ -106,7 +131,7 @@ export default function Header() {
             </button>
             <button onClick={() => window.location.href = '/vip-services'} className="nav-link nav-btn vip-nav-btn">
               <i className="fas fa-crown"></i>
-              خدمات VIP
+              {t('vip_services')}
             </button>
           </div>
 
