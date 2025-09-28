@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     domains: ['images.unsplash.com'],
     unoptimized: true
   },
+  outputFileTracingRoot: __dirname,
   experimental: {
     optimizeCss: true,
     turbo: {
