@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گلدن لایف - خدمات VIP</title>
+    <style>
+        /* فیکس سریع مشکلات هدر */
+        .nav-link i {
+            margin-left: 0.25rem !important;
+        }
+        
+        .nav-link.vip-services-btn i {
+            margin-left: 0.3rem !important;
+        }
+        
+        .nav-link.theme-toggle {
+            border: 1.5px solid rgba(212, 175, 55, 0.2) !important;
+        }
+        
+        .nav-menu {
+            justify-content: center !important;
+        }
+        
+        .nav-container {
+            justify-content: center !important;
+            padding: 0 !important;
+            margin: 0 auto !important;
+        }
+        
+        .nav-link.primary-nav,
+        .nav-link.filter-nav,
+        .nav-link.theme-toggle,
+        .nav-link.map-search {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        
+        /* Hero title responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 1.8rem !important;
+                margin-top: -180px !important;
+            }
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0d0d0d;
+            --primary-gold: #d4af37;
+            --secondary-gold: #f4e4a6;
+            --light-gold: #faf6e8;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #333333;
+            --light-gray: #666666;
+            --white: #ffffff;
+            --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.3);
+            --shadow-dark: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-gold);
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(13, 13, 13, 0.4), rgba(13, 13, 13, 0.4)),
+                        linear-gradient(45deg, #1a1a1a, #333333);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary-gold), var(--secondary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--light-gold);
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-gold), var(--secondary-gold));
+            color: var(--primary-dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 15px 0;
+            background: var(--dark-gray);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--primary-gold);
+            position: relative;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: var(--medium-gray);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-gold);
+            border-color: var(--primary-gold);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .service-card p {
+            color: var(--light-gray);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--medium-gray);
+            padding: 60px 0 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    👑 گلدن لایف
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">خانه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link" onclick="scrollToServicesOffset(event)">خدمات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">تماس</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content" style="margin-top: 130px;">
+            <h1 class="hero-title" style="margin-top: -220px; font-size: 2.2rem;">به گلدن لایف خوش آمدید</h1>
+            <p class="hero-subtitle">تجربه‌ای منحصر به فرد از خدمات VIP</p>
+            
+            <!-- Quick Filter -->
+            <div style="margin-top: -30px; padding: 1.5rem; background: rgba(26, 26, 26, 0.8); border-radius: 15px; border: 2px solid rgba(212, 175, 55, 0.3); width: 430px; height: 340px; margin-left: auto; margin-right: auto;">
+                <h3 style="color: #d4af37; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 500; max-width: 350px; margin-left: auto; margin-right: auto;">چه خدمتی نیاز دارید؟</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem;">
+                    <button onclick="scrollToService('shopping')" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: rgba(51, 51, 51, 0.8); border: 2px solid transparent; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease;">
+                        🛒<span>خرید</span>
+                    </button>
+                    <button onclick="scrollToService('medical')" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: rgba(51, 51, 51, 0.8); border: 2px solid transparent; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease;">
+                        ⚕️<span>درمانی</span>
+                    </button>
+                    <button onclick="scrollToService('gardening')" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: rgba(51, 51, 51, 0.8); border: 2px solid transparent; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease;">
+                        🌱<span>باغبانی</span>
+                    </button>
+                    <button onclick="scrollToService('cleaning')" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: rgba(51, 51, 51, 0.8); border: 2px solid transparent; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease;">
+                        🧹<span>نظافت</span>
+                    </button>
+                    <button onclick="scrollToService('technical')" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: rgba(51, 51, 51, 0.8); border: 2px solid transparent; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease;">
+                        🔧<span>فنی</span>
+                    </button>
+                </div>
+                <div style="text-align: center; margin: 1rem 0; color: #666;">یا</div>
+                <a href="#services" class="cta-button" onclick="scrollToServicesOffset(event)">مشاهده همه خدمات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">خدمات ما</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>خرید</h3>
+                    <p>خرید اقلام مورد نیاز شما با بهترین کیفیت و قیمت</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚕️</div>
+                    <h3>درمانی</h3>
+                    <p>خدمات درمانی و مراقبتی در منزل با کادر متخصص</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌱</div>
+                    <h3>باغبانی</h3>
+                    <p>طراحی و نگهداری فضای سبز با متخصصان باغبانی</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧹</div>
+                    <h3>نظافت</h3>
+                    <p>خدمات نظافت حرفه‌ای برای منزل و محل کار</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>فنی</h3>
+                    <p>تعمیرات و خدمات فنی با کیفیت بالا</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-logo">👑 گلدن لایف</div>
+            <p>تجربه‌ای منحصر به فرد از خدمات VIP</p>
+            <p style="margin-top: 2rem; color: var(--light-gray);">
+                📞 ۰۲۱-۱۲۳۴۵۶۷۸ | 📧 info@goldenlife.ir
+            </p>
+            <p style="margin-top: 1rem; color: var(--light-gray);">
+                &copy; ۲۰۲۴ گلدن لایف. تمامی حقوق محفوظ است.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        const header = document.querySelector('.header');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(13, 13, 13, 0.98)';
+            } else {
+                header.style.background = 'rgba(13, 13, 13, 0.95)';
+            }
+        });
+
+        console.log('Golden Life website loaded successfully!');
+
+        // Quick Filter Function
+        function scrollToService(serviceType) {
+            const servicesSection = document.getElementById('services');
+            if (servicesSection) {
+                servicesSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+
+            // Highlight service card
+            setTimeout(() => {
+                const serviceMap = {
+                    'shopping': 0,
+                    'medical': 1,
+                    'gardening': 2,
+                    'cleaning': 3,
+                    'technical': 4
+                };
+
+                const cardIndex = serviceMap[serviceType];
+                if (cardIndex !== undefined) {
+                    const serviceCards = document.querySelectorAll('.service-card');
+                    const targetCard = serviceCards[cardIndex];
+                    
+                    if (targetCard) {
+                        // Reset all cards
+                        serviceCards.forEach(card => {
+                            card.style.transform = '';
+                            card.style.boxShadow = '';
+                            card.style.borderColor = '';
+                        });
+
+                        // Highlight target card
+                        targetCard.style.transform = 'translateY(-15px) scale(1.05)';
+                        targetCard.style.boxShadow = '0 15px 40px rgba(212, 175, 55, 0.5)';
+                        targetCard.style.borderColor = '#d4af37';
+
+                        // Remove highlight after 3 seconds
+                        setTimeout(() => {
+                            targetCard.style.transform = '';
+                            targetCard.style.boxShadow = '';
+                            targetCard.style.borderColor = '';
+                        }, 3000);
+                    }
+                }
+            }, 800);
+        }
+        
+        // اسکرول به سکشن خدمات تا بالای سکشن با بالای صفحه یکجا باشد
+        function scrollToServicesOffset(event) {
+            event.preventDefault();
+            const servicesSection = document.getElementById('services');
+            if (servicesSection) {
+                // محاسبه ارتفاع header برای offset
+                const header = document.querySelector('.header');
+                const headerHeight = header ? header.offsetHeight : 80;
+                const offsetTop = servicesSection.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</body>
+</html>

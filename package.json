@@ -1,23 +1,25 @@
 {
-  "name": "project1",
-  "version": "0.1.0",
+  "name": "golden-life-next",
+  "version": "1.0.0",
   "private": true,
+  "description": "Golden Life VIP Services Website - Next.js Version",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint",
+    "export": "next export"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "autoprefixer": "^10.4.21",
+    "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.4"
+    "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
-    "eslint-config-next": "15.5.4",
-    "@eslint/eslintrc": "^3"
+    "eslint-config-next": "15.5.4"
   }
 }

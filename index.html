@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گلدن لایف - خدمات VIP</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+        
+        /* فاصله آیکون‌های هدر کمتر شود */
+        .nav-link i {
+            margin-left: 0.25rem !important;
+        }
+        
+        .nav-link.vip-services-btn i {
+            margin-left: 0.3rem !important;
+        }
+        
+        /* همه دکمه‌ها border داشته باشند */
+        .nav-link.theme-toggle {
+            border: 1.5px solid rgba(212, 175, 55, 0.2) !important;
+        }
+        
+        /* nav-menu وسط‌چین باشد */
+        .nav-menu {
+            justify-content: center !important;
+        }
+        
+        /* nav-container وسط‌چین باشد */
+        .nav-container {
+            justify-content: center !important;
+            padding: 0 !important;
+            margin: 0 auto !important;
+        }
+        
+        /* دکمه‌های nav-menu padding صفر */
+        .nav-link.primary-nav,
+        .nav-link.filter-nav,
+        .nav-link.theme-toggle,
+        .nav-link.map-search {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        
+        /* Hero title responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 1.8rem !important;
+                margin-top: -180px !important;
+            }
+        }
+        
+        /* Service Cards Hover Effects */
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02) !important;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3) !important;
+            border-color: rgba(212, 175, 55, 0.6) !important;
+        }
+        
+        .service-card:hover > div:last-child {
+            left: 100% !important;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Grid */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
+            .service-card {
+                padding: 1.5rem !important;
+            }
+            
+            .service-icon {
+                width: 70px !important;
+                height: 70px !important;
+            }
+            
+            .service-card h3 {
+                font-size: 1.2rem !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar kilid-style">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-key"></i>
+                    <span>گلدن لایف</span>
+                    <small>بازار تخصصی ملک</small>
+                </div>
+                
+                <!-- Main Navigation -->
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#buy" class="nav-link primary-nav">
+                            <i class="fas fa-shopping-cart"></i>
+                            خرید
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#rent" class="nav-link primary-nav">
+                            <i class="fas fa-handshake"></i>
+                            رهن و اجاره
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#map" class="nav-link map-search">
+                            <i class="fas fa-map-marked-alt"></i>
+                            نقشه
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Secondary Navigation -->
+                <div class="nav-secondary">
+                    <a href="#services" class="nav-link secondary" onclick="scrollToServicesOffset(event)">
+                        <i class="fas fa-clipboard-list"></i>
+                        ثبت درخواست
+                    </a>
+                    <a href="#login" class="nav-link login-btn">
+                        <i class="fas fa-user"></i>
+                        ورود
+                    </a>
+                    <button class="nav-link theme-toggle" onclick="toggleTheme()">
+                        <i class="fas fa-sun"></i>
+                        روز/شب
+                    </button>
+                    <button class="nav-link theme-toggle" onclick="toggleLanguage()">
+                        <i class="fas fa-globe"></i>
+                        EN/فا
+                    </button>
+                </div>
+
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content" style="margin-top: 130px;">
+            <h1 class="hero-title fade-in" style="margin-top: -220px; font-size: 2.2rem;">به گلدن لایف خوش آمدید</h1>
+            <p class="hero-subtitle fade-in">تجربه‌ای منحصر به فرد از خدمات VIP</p>
+            
+            <!-- Real Estate Filter Section -->
+            <div class="quick-filter fade-in" style="width: 430px; height: 420px;">
+                <h3 class="filter-title">
+                    <i class="fas fa-home"></i>
+                    فیلتر املاک
+                </h3>
+                <form class="estate-filter-form">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>نوع معامله</label>
+                            <select id="dealType">
+                                <option value="">انتخاب کنید</option>
+                                <option value="buy">خرید</option>
+                                <option value="rent">رهن و اجاره</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>نوع ملک</label>
+                            <select id="propertyType">
+                                <option value="">انتخاب کنید</option>
+                                <option value="apartment">آپارتمان</option>
+                                <option value="house">خانه ویلایی</option>
+                                <option value="office">اداری</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>حداقل قیمت (میلیون تومان)</label>
+                            <input type="number" id="minPrice" placeholder="مثال: 500">
+                        </div>
+                        <div class="filter-group">
+                            <label>حداکثر قیمت (میلیون تومان)</label>
+                            <input type="number" id="maxPrice" placeholder="مثال: 2000">
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>منطقه</label>
+                            <select id="area">
+                                <option value="">انتخاب منطقه</option>
+                                <option value="1">منطقه 1 - تجریش</option>
+                                <option value="2">منطقه 2 - ولنجک</option>
+                                <option value="3">منطقه 3 - زعفرانیه</option>
+                                <option value="5">منطقه 5 - جنت آباد</option>
+                                <option value="6">منطقه 6 - یوسف آباد</option>
+                                <option value="7">منطقه 7 - شهرک غرب</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>متراژ</label>
+                            <select id="size">
+                                <option value="">انتخاب متراژ</option>
+                                <option value="50-80">50-80 متر</option>
+                                <option value="80-120">80-120 متر</option>
+                                <option value="120-200">120-200 متر</option>
+                                <option value="200+">بالای 200 متر</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>تعداد اتاق</label>
+                            <select id="rooms">
+                                <option value="">انتخاب کنید</option>
+                                <option value="1">1 خواب</option>
+                                <option value="2">2 خواب</option>
+                                <option value="3">3 خواب</option>
+                                <option value="4+">4+ خواب</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>نوع سند</label>
+                            <select id="documentType">
+                                <option value="">انتخاب کنید</option>
+                                <option value="ownership">سند تک برگ</option>
+                                <option value="cooperative">تعاونی</option>
+                                <option value="endowment">وقفی</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="search-estate-btn" onclick="searchEstates()">
+                        <i class="fas fa-search"></i>
+                        جستجو در املاک
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">خدمات ما</h2>
+            <div class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-gold), #f4d03f); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-shopping-bag" style="font-size: 2rem; color: var(--primary-dark);"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">خرید</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">خرید اقلام مورد نیاز شما با بهترین کیفیت و قیمت مناسب</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-user-md" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">درمانی</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">خدمات درمانی و مراقبتی در منزل با کادر متخصص و مجرب</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #27ae60, #2ecc71); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-seedling" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">باغبانی</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">طراحی و نگهداری فضای سبز با متخصصان حرفه‌ای باغبانی</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-broom" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">نظافت</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">خدمات نظافت حرفه‌ای برای منزل و محل کار با تجهیزات مدرن</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-tools" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">فنی</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">تعمیرات و خدمات فنی با کیفیت بالا و ضمانت کامل</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #9b59b6, #8e44ad); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-car" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">حمل‌ونقل</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">خدمات حمل‌ونقل VIP و تاکسی لوکس با راننده مجرب</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #34495e, #2c3e50); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(52, 73, 94, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-shield-alt" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">امنیت</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">خدمات امنیتی و محافظت شخصی با نیروهای آموزش دیده</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #e91e63, #ad1457); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-utensils" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">پذیرایی</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">خدمات پذیرایی و کیترینگ لوکس برای مهمانی‌های شما</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+                
+                <div class="service-card" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.98)); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                    <div class="service-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #16a085, #1abc9c); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 8px 25px rgba(26, 188, 156, 0.4); position: relative; overflow: hidden;">
+                        <i class="fas fa-graduation-cap" style="font-size: 2rem; color: white;"></i>
+                        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); animation: shimmer 3s infinite;"></div>
+                    </div>
+                    <h3 style="color: var(--primary-gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;">آموزشی</h3>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem;">خدمات آموزشی و کوچینگ تخصصی در منزل و محل کار</p>
+                    <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent); transition: left 0.6s ease;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Request Form Section -->
+    <section id="request" class="request-form">
+        <div class="container">
+            <h2 class="section-title">ثبت درخواست</h2>
+            <form class="form" id="serviceForm">
+                <div class="form-group">
+                    <label for="name">نام و نام خانوادگی</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">شماره تماس</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">نوع خدمت</label>
+                    <select id="service" name="service" required>
+                        <option value="">انتخاب کنید</option>
+                        <option value="shopping">خرید</option>
+                        <option value="medical">درمانی</option>
+                        <option value="gardening">باغبانی</option>
+                        <option value="cleaning">نظافت</option>
+                        <option value="technical">فنی</option>
+                        <option value="transport">حمل‌ونقل</option>
+                        <option value="security">امنیت</option>
+                        <option value="catering">پذیرایی</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time">زمان اجرا</label>
+                    <input type="datetime-local" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">آدرس</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="description">توضیحات</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-button">ارسال درخواست</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Technicians Section -->
+    <section class="technicians">
+        <div class="container">
+            <h2 class="section-title">تکنسین‌های ما</h2>
+            <div class="technicians-grid">
+                <div class="technician-card">
+                    <div class="technician-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face" alt="احمد رضایی">
+                    </div>
+                    <h3>احمد رضایی</h3>
+                    <p class="technician-service">متخصص فنی</p>
+                    <p class="technician-time">زمان حضور: ۳۰ دقیقه</p>
+                </div>
+                <div class="technician-card">
+                    <div class="technician-image">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face" alt="مریم احمدی">
+                    </div>
+                    <h3>مریم احمدی</h3>
+                    <p class="technician-service">متخصص نظافت</p>
+                    <p class="technician-time">زمان حضور: ۲۰ دقیقه</p>
+                </div>
+                <div class="technician-card">
+                    <div class="technician-image">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face" alt="علی محمدی">
+                    </div>
+                    <h3>علی محمدی</h3>
+                    <p class="technician-service">متخصص باغبانی</p>
+                    <p class="technician-time">زمان حضور: ۴۵ دقیقه</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="container">
+            <h2 class="section-title">نظرات مشتریان VIP</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="سارا کریمی">
+                    </div>
+                    <div class="testimonial-header">
+                        <h4>سارا کریمی</h4>
+                        <span>مشتری VIP</span>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"خدمات فوق‌العاده‌ای دریافت کردم. کیفیت کار بسیار بالا و تیم حرفه‌ای"</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt="رضا نوری">
+                    </div>
+                    <div class="testimonial-header">
+                        <h4>رضا نوری</h4>
+                        <span>مشتری VIP</span>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"سرویس عالی و سریع. کاملاً راضی هستم و به دیگران توصیه می‌کنم"</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=80&h=80&fit=crop&crop=face" alt="نازنین حسینی">
+                    </div>
+                    <div class="testimonial-header">
+                        <h4>نازنین حسینی</h4>
+                        <span>مشتری VIP</span>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"تجربه‌ای بی‌نظیر از خدمات لوکس. کیفیت و سرعت فوق‌العاده"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title">نقشه و جستجو</h2>
+            <div class="search-filters">
+                <div class="filter-group">
+                    <select id="serviceFilter">
+                        <option value="">نوع خدمت</option>
+                        <option value="shopping">خرید</option>
+                        <option value="medical">درمانی</option>
+                        <option value="gardening">باغبانی</option>
+                        <option value="cleaning">نظافت</option>
+                        <option value="technical">فنی</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="timeFilter">
+                        <option value="">زمان اجرا</option>
+                        <option value="morning">صبح</option>
+                        <option value="afternoon">عصر</option>
+                        <option value="evening">شب</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <input type="text" id="areaFilter" placeholder="منطقه">
+                </div>
+                <button class="search-button">جستجو</button>
+            </div>
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="container">
+            <h2 class="section-title">گالری خدمات</h2>
+            <div class="swiper gallery-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop" alt="خدمات خرید">
+                        <div class="slide-overlay">
+                            <h3>خدمات خرید</h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop" alt="خدمات درمانی">
+                        <div class="slide-overlay">
+                            <h3>خدمات درمانی</h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&h=600&fit=crop" alt="باغبانی">
+                        <div class="slide-overlay">
+                            <h3>باغبانی</h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&h=600&fit=crop" alt="نظافت">
+                        <div class="slide-overlay">
+                            <h3>نظافت</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-crown"></i>
+                        <span>گلدن لایف</span>
+                    </div>
+                    <p>تجربه‌ای منحصر به فرد از خدمات VIP</p>
+                </div>
+                <div class="footer-section">
+                    <h3>لینک‌های مهم</h3>
+                    <ul>
+                        <li><a href="#home">خانه</a></li>
+                        <li><a href="#services">خدمات</a></li>
+                        <li><a href="#request">ثبت درخواست</a></li>
+                        <li><a href="#contact">تماس</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تماس با ما</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                        <p><i class="fas fa-envelope"></i> info@goldenlife.ir</p>
+                        <p><i class="fas fa-map-marker-alt"></i> تهران، ایران</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>شبکه‌های اجتماعی</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; ۲۰۲۴ گلدن لایف. تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <i class="fas fa-check-circle"></i>
+                <h3>درخواست شما با موفقیت ثبت شد</h3>
+                <p>تیم ما در اسرع وقت با شما تماس خواهد گرفت</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        // اسکرول به سکشن خدمات تا بالای سکشن با بالای صفحه یکجا باشد
+        function scrollToServicesOffset(event) {
+            event.preventDefault();
+            const servicesSection = document.getElementById('services');
+            if (servicesSection) {
+                // محاسبه ارتفاع header برای offset
+                const header = document.querySelector('.header');
+                const headerHeight = header ? header.offsetHeight : 80;
+                const offsetTop = servicesSection.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</body>
+</html>

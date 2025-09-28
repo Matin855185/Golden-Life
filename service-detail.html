@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزئیات خدمت - Golden Life</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+    <style>
+        .service-detail-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(13, 13, 13, 0.6), rgba(13, 13, 13, 0.6)),
+                        url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .service-detail-content {
+            padding: 100px 0;
+            background: var(--dark-gray);
+        }
+
+        .service-info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-description {
+            background: var(--medium-gray);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .service-description:hover {
+            border-color: var(--primary-gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .service-sidebar {
+            background: var(--medium-gray);
+            padding: 2.5rem;
+            border-radius: 20px;
+            height: fit-content;
+            border: 2px solid var(--primary-gold);
+        }
+
+        .service-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .service-features li:last-child {
+            border-bottom: none;
+        }
+
+        .service-features i {
+            color: var(--primary-gold);
+            width: 20px;
+        }
+
+        .price-info {
+            background: linear-gradient(45deg, var(--primary-gold), var(--secondary-gold));
+            color: var(--primary-dark);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            font-weight: 600;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn.phone {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+        }
+
+        .contact-btn.whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-gallery {
+            margin: 3rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .reviews-section {
+            background: var(--primary-dark);
+            padding: 100px 0;
+        }
+
+        .review-card {
+            background: var(--medium-gray);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            border-color: var(--primary-gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-gold);
+        }
+
+        .review-rating {
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--medium-gray);
+            padding: 1rem 0;
+            margin-top: 80px;
+        }
+
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--light-gray);
+        }
+
+        .breadcrumb-nav a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: var(--secondary-gold);
+        }
+
+        @media (max-width: 768px) {
+            .service-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-detail-hero {
+                height: 40vh;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>Golden Life</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">خانه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#services" class="nav-link">خدمات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#request" class="nav-link">ثبت درخواست</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#contact" class="nav-link">تماس</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <nav class="breadcrumb-nav">
+                <a href="index.html">خانه</a>
+                <i class="fas fa-chevron-left"></i>
+                <a href="index.html#services">خدمات</a>
+                <i class="fas fa-chevron-left"></i>
+                <span>خدمات خرید VIP</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Service Detail Hero -->
+    <section class="service-detail-hero">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in">خدمات خرید VIP</h1>
+            <p class="hero-subtitle fade-in">تجربه‌ای منحصر به فرد از خرید لوکس</p>
+        </div>
+    </section>
+
+    <!-- Service Detail Content -->
+    <section class="service-detail-content">
+        <div class="container">
+            <div class="service-info-grid">
+                <div class="service-description">
+                    <h2 style="color: var(--primary-gold); margin-bottom: 1.5rem;">درباره این خدمت</h2>
+                    <p style="line-height: 1.8; margin-bottom: 2rem;">
+                        خدمات خرید VIP ما شامل خرید تمامی اقلام مورد نیاز شما با بهترین کیفیت و قیمت می‌باشد. 
+                        تیم متخصص ما با دقت و توجه به جزئیات، بهترین محصولات را برای شما انتخاب و تهیه می‌کند.
+                    </p>
+                    
+                    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">ویژگی‌های خدمت</h3>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> خرید از بهترین فروشگاه‌ها</li>
+                        <li><i class="fas fa-check"></i> بررسی کیفیت محصولات</li>
+                        <li><i class="fas fa-check"></i> تحویل سریع و ایمن</li>
+                        <li><i class="fas fa-check"></i> ضمانت کیفیت</li>
+                        <li><i class="fas fa-check"></i> مشاوره رایگان</li>
+                        <li><i class="fas fa-check"></i> خدمات ۲۴ ساعته</li>
+                    </ul>
+
+                    <h3 style="color: var(--primary-gold); margin: 2rem 0 1rem;">فرآیند خدمت</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="text-align: center; padding: 1rem; background: var(--dark-gray); border-radius: 10px;">
+                            <i class="fas fa-phone" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 0.5rem;"></i>
+                            <h4>تماس</h4>
+                            <p style="font-size: 0.9rem; color: var(--light-gray);">دریافت درخواست شما</p>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: var(--dark-gray); border-radius: 10px;">
+                            <i class="fas fa-list" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 0.5rem;"></i>
+                            <h4>لیست</h4>
+                            <p style="font-size: 0.9rem; color: var(--light-gray);">تهیه لیست خرید</p>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: var(--dark-gray); border-radius: 10px;">
+                            <i class="fas fa-shopping-cart" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 0.5rem;"></i>
+                            <h4>خرید</h4>
+                            <p style="font-size: 0.9rem; color: var(--light-gray);">انجام خرید</p>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: var(--dark-gray); border-radius: 10px;">
+                            <i class="fas fa-truck" style="font-size: 2rem; color: var(--primary-gold); margin-bottom: 0.5rem;"></i>
+                            <h4>تحویل</h4>
+                            <p style="font-size: 0.9rem; color: var(--light-gray);">تحویل به شما</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-sidebar">
+                    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">اطلاعات خدمت</h3>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <p><strong>زمان اجرا:</strong> ۲-۴ ساعت</p>
+                        <p><strong>منطقه تحت پوشش:</strong> تهران</p>
+                        <p><strong>روزهای کاری:</strong> همه روزه</p>
+                        <p><strong>ساعات کاری:</strong> ۸ صبح تا ۱۰ شب</p>
+                    </div>
+
+                    <div class="price-info">
+                        <h4>قیمت خدمت</h4>
+                        <div style="font-size: 1.5rem; margin: 0.5rem 0;">از ۱۰۰,۰۰۰ تومان</div>
+                        <small>بسته به نوع و حجم خرید</small>
+                    </div>
+
+                    <div class="contact-buttons">
+                        <a href="tel:+982112345678" class="contact-btn phone">
+                            <i class="fas fa-phone"></i>
+                            تماس فوری
+                        </a>
+                        <a href="https://wa.me/989123456789" class="contact-btn whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            واتساپ
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Gallery -->
+            <div class="service-gallery">
+                <h2 class="section-title">گالری تصاویر</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop" alt="خرید مواد غذایی">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop" alt="خرید لباس">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop" alt="خرید الکترونیک">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1586880244386-8b3e34c8382c?w=400&h=300&fit=crop" alt="خرید هدایا">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">نظرات مشتریان</h2>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="مریم احمدی" class="review-avatar">
+                    <div>
+                        <h4>مریم احمدی</h4>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p>"خدمات فوق‌العاده‌ای دریافت کردم. تیم بسیار حرفه‌ای و دقیق بود. همه چیز طبق درخواست من خریداری شد و در زمان مقرر تحویل گرفتم."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt="احمد رضایی" class="review-avatar">
+                    <div>
+                        <h4>احمد رضایی</h4>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p>"سرویس عالی! وقت زیادی برای من صرفه‌جویی کرد. کیفیت محصولات انتخابی بسیار بالا بود و قیمت‌ها هم منصفانه."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=80&h=80&fit=crop&crop=face" alt="نازنین حسینی" class="review-avatar">
+                    <div>
+                        <h4>نازنین حسینی</h4>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p>"تجربه‌ای بی‌نظیر! از مشاوره تا تحویل همه چیز عالی بود. حتماً دوباره استفاده خواهم کرد."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-crown"></i>
+                        <span>Golden Life</span>
+                    </div>
+                    <p>تجربه‌ای منحصر به فرد از خدمات VIP</p>
+                </div>
+                <div class="footer-section">
+                    <h3>لینک‌های مهم</h3>
+                    <ul>
+                        <li><a href="index.html">خانه</a></li>
+                        <li><a href="index.html#services">خدمات</a></li>
+                        <li><a href="index.html#request">ثبت درخواست</a></li>
+                        <li><a href="index.html#contact">تماس</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تماس با ما</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                        <p><i class="fas fa-envelope"></i> info@goldenlife.ir</p>
+                        <p><i class="fas fa-map-marker-alt"></i> تهران، ایران</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>شبکه‌های اجتماعی</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; ۲۰۲۴ Golden Life. تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
