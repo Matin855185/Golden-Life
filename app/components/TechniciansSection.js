@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 
 export default function TechniciansSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -247,7 +248,7 @@ export default function TechniciansSection() {
               }}
             >
               <div className="technician-image">
-                <img src={technician.image} alt={technician.name} />
+                <Image src={technician.image} alt={technician.name} width={300} height={300} />
               </div>
               <h3>{technician.name}</h3>
               <p className="technician-service">{technician.service}</p>

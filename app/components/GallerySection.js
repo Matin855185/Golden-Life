@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 export default function GallerySection() {
   const galleryItems = [
@@ -61,7 +62,7 @@ export default function GallerySection() {
           <div className="swiper-wrapper">
             {galleryItems.map((item, index) => (
               <div key={index} className="swiper-slide">
-                <img src={item.image} alt={item.title} />
+                <Image src={item.image} alt={item.title} width={800} height={600} />
                 <div className="slide-overlay">
                   <h3>{item.title}</h3>
                 </div>

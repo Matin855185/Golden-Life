@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function LazyImage({ 
   src, 
@@ -55,12 +56,13 @@ export default function LazyImage({
       
       {/* Actual Image */}
       {isInView && (
-        <img
+        <Image
           src={src}
           alt={alt}
           onLoad={handleLoad}
           className={`lazy-image ${isLoaded ? 'loaded' : 'loading'}`}
-          loading="lazy"
+          fill
+          sizes="100vw"
         />
       )}
       
@@ -86,8 +88,6 @@ export default function LazyImage({
         }
         
         .lazy-image {
-          width: 100%;
-          height: 100%;
           object-fit: cover;
           transition: opacity 0.5s ease;
           opacity: 0;

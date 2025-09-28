@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function TrustSection() {
   const testimonials = [
     {
@@ -28,14 +30,14 @@ export default function TrustSection() {
           {testimonials.map((testimonial, index) => (
             <div key={index} className="testimonial">
               <div className="testimonial-image">
-                <img src={testimonial.image} alt={testimonial.author} />
+                <Image src={testimonial.image} alt={testimonial.author} width={80} height={80} />
               </div>
               <div className="testimonial-header">
                 <h4>{testimonial.author}</h4>
                 <span>{testimonial.role}</span>
               </div>
               <div className="testimonial-content">
-                <p>"{testimonial.content}"</p>
+                <p>&ldquo;{testimonial.content}&rdquo;</p>
               </div>
             </div>
           ))}

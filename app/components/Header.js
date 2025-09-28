@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageToggle from './LanguageToggle';
 
@@ -10,6 +11,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
     // بازگشت به بالای صفحه هنگام لود
@@ -64,16 +66,18 @@ export default function Header() {
           {/* Logo Section - Kilid Style */}
           <div className="nav-logo">
             <div className="logo-main">
-              <img 
-                src="/SiteLogo.png.png" 
-                alt="Golden Life Logo" 
-                className="site-logo"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextElementSibling.style.display = 'inline-block';
-                }}
-              />
-              <i className="fas fa-key logo-fallback" style={{display: 'none'}}></i>
+              {!logoError ? (
+                <Image 
+                  src="/SiteLogo.png.png" 
+                  alt="Golden Life Logo" 
+                  className="site-logo"
+                  width={48}
+                  height={48}
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <i className="fas fa-key logo-fallback" />
+              )}
               <div className="logo-text">
                 <span className="logo-title">{t('golden_life')}</span>
                 <small className="logo-subtitle">{t('real_estate_market')}</small>
