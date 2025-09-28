@@ -2094,7 +2094,11 @@ body.light-mode .vip-nav-btn:hover {
     .vip-time-slots {
         grid-template-columns: repeat(2, 1fr);
     }
-}
+}    
+
+
+
+
 
 /* Form Validation and Error Styles */
 .vip-form-group {
