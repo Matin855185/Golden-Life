@@ -12,6 +12,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [logoError, setLogoError] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     // بازگشت به بالای صفحه هنگام لود
@@ -105,8 +106,7 @@ export default function Header() {
                 className={`theme-toggle-btn ${!isDarkMode ? 'light-mode' : ''}`}
               >
                 <div className="theme-content">
-                  <div className={`theme-icon ${isDarkMode ? 'sun-icon' : 'moon-icon'}`}>
-                  </div>
+                  <i className={`fas ${isDarkMode ? 'fa-lightbulb' : 'fa-moon'} theme-icon`}></i>
                   <div className="theme-text">
                     {isDarkMode ? 'Light' : 'Dark'}
                   </div>
@@ -133,15 +133,52 @@ export default function Header() {
               <i className="fas fa-crown"></i>
               {t('vip_services')}
             </button>
-          </div>
+            
+            {/* Dropdown for Collaboration */}
+            <div 
+              className="nav-dropdown-collaboration" 
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <button className="nav-link nav-btn collaboration-btn">
+                <i className="fas fa-user-plus"></i>
+                همکاری با ما
+                <i className="fas fa-chevron-down" style={{ 
+                  transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s ease',
+                  fontSize: '12px',
+                  marginLeft: '8px',
+                  color: '#d4af37'
+                }}></i>
+              </button>
+              {dropdownOpen && (
+                <div className="collaboration-dropdown-menu">
+                  <button 
+                    onClick={() => window.location.href = '/technician-registration'} 
+                    className="collaboration-dropdown-item"
+                  >
+                    <i className="fas fa-tools"></i>
+                    <span>ثبت‌نام تکنسین</span>
+                  </button>
+                  <button 
+                    onClick={() => window.location.href = '/consultant-registration'} 
+                    className="collaboration-dropdown-item"
+                  >
+                    <i className="fas fa-handshake"></i>
+                    <span>ثبت‌نام مشاور املاک</span>
+                  </button>
+                </div>
+              )}
+            </div>
 
           <div 
-            className={`hamburger ${isMenuOpen ? 'active' : ''}`}
+            className={'hamburger ' + (isMenuOpen ? 'active' : '')}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <span className="bar"></span>
             <span className="bar"></span>
             <span className="bar"></span>
+          </div>
           </div>
         </div>
       </nav>

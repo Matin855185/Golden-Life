@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import VipServicesCards from '../components/VipServicesCards';
+import { useUser } from '../contexts/UserContext';
 
 export default function VipServicesPage() {
   const [selectedService, setSelectedService] = useState(null);
