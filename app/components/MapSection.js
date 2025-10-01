@@ -1,14 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-
-// Sample property data - moved outside component to avoid re-renders
-const properties = [
-  { id: 1, lat: 35.7219, lng: 51.3347, price: '15.5 میلیارد', type: 'فروش', title: 'آپارتمان نیاوران' },
-  { id: 2, lat: 35.7589, lng: 51.4078, price: '12.8 میلیارد', type: 'فروش', title: 'آپارتمان سعادت آباد' },
-  { id: 3, lat: 35.7665, lng: 51.3751, price: '18.2 میلیارد', type: 'فروش', title: 'آپارتمان شهرک غرب' },
-  { id: 4, lat: 35.8058, lng: 51.4264, price: '45 میلیون', type: 'اجاره', title: 'آپارتمان زعفرانیه' },
-];
+import { useState } from 'react';
 
 export default function MapSection() {
   const [mapFilters, setMapFilters] = useState({
@@ -17,231 +9,6 @@ export default function MapSection() {
     priceRange: '',
     area: ''
   });
-  
-  const mapRef = useRef(null);
-  const [map, setMap] = useState(null);
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const [currentTileLayer, setCurrentTileLayer] = useState(null);
-
-  // Theme detection and listener
-  useEffect(() => {
-    // Check initial theme
-    const checkTheme = () => {
-      const isLight = document.body.classList.contains('light-mode');
-      setIsDarkMode(!isLight);
-    };
-    
-    checkTheme();
-    
-    // Listen for theme changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          checkTheme();
-        }
-      });
-    });
-    
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-    
-    return () => observer.disconnect();
-  }, []);
-
-  // Map initialization
-  useEffect(() => {
-    const initMap = async () => {
-      await loadLeaflet();
-    };
-    
-    initMap();
-
-    return () => {
-      if (map) {
-        map.remove();
-      }
-    };
-  }, [loadLeaflet, map]);
-
-  // Update map theme when isDarkMode changes
-  useEffect(() => {
-    if (!map || !window.L) return;
-    
-    // Remove current tile layer
-    if (currentTileLayer) {
-      map.removeLayer(currentTileLayer);
-    }
-    
-    // Add appropriate tile layer based on theme
-    let newTileLayer;
-    if (isDarkMode) {
-      // Dark theme - use dark tiles
-      newTileLayer = window.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19
-      });
-    } else {
-      // Light theme - use light tiles
-      newTileLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      });
-    }
-    
-    newTileLayer.addTo(map);
-    setCurrentTileLayer(newTileLayer);
-  }, [map, isDarkMode, currentTileLayer]);
-
-  // Load Leaflet dynamically
-  const loadLeaflet = useCallback(async () => {
-    if (typeof window === 'undefined') return;
-    
-    // Load Leaflet CSS
-    if (!document.querySelector('link[href*="leaflet"]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-      document.head.appendChild(link);
-    }
-
-    // Load Leaflet JS
-    if (!window.L) {
-      const script = document.createElement('script');
-      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-      script.onload = () => {
-        // Add small delay to ensure container is ready
-        setTimeout(initializeLeafletMap, 100);
-      };
-      document.head.appendChild(script);
-    } else {
-      // Add small delay to ensure container is ready
-      setTimeout(initializeLeafletMap, 100);
-    }
-  }, [initializeLeafletMap]);
-
-  const initializeLeafletMap = useCallback(() => {
-    if (!mapRef.current || !window.L) {
-      console.log('Map container or Leaflet not ready');
-      return;
-    }
-
-    try {
-      console.log('Initializing Leaflet map...');
-      
-      // Initialize map centered on Tehran
-      const mapInstance = window.L.map(mapRef.current, {
-        center: [35.6892, 51.3890],
-        zoom: 11,
-        zoomControl: true,
-        scrollWheelZoom: true
-      });
-
-      setMap(mapInstance);
-      setIsMapLoaded(true);
-      
-      // Add appropriate tile layer based on current theme
-      let tileLayer;
-      if (isDarkMode) {
-        // Dark theme - use dark tiles
-        tileLayer = window.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: 'abcd',
-          maxZoom: 19
-        });
-      } else {
-        // Light theme - use light tiles
-        tileLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 19
-        });
-      }
-      
-      tileLayer.addTo(mapInstance);
-      setCurrentTileLayer(tileLayer);
-      
-      // Force map to recalculate size
-      setTimeout(() => {
-        mapInstance.invalidateSize();
-      }, 200);
-      
-      addPropertyMarkers(mapInstance);
-      
-      console.log('Leaflet map initialized successfully');
-    } catch (error) {
-      console.error('Error initializing map:', error);
-    }
-  }, [isDarkMode, addPropertyMarkers]);
-
-  // initializeMapboxMap removed - now using MapboxMap component
-
-  const addPropertyMarkers = useCallback((mapInstance) => {
-    properties.forEach(property => {
-      // Create custom icon based on property type
-      const iconColor = property.type === 'فروش' ? '#d4af37' : '#3498db';
-      
-      const customIcon = window.L.divIcon({
-        html: `
-          <div style="
-            background-color: ${iconColor};
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            position: relative;
-          "></div>
-          <div style="
-            position: absolute;
-            top: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 10px;
-            white-space: nowrap;
-            border: 1px solid ${iconColor};
-          ">${property.price}</div>
-        `,
-        className: 'custom-marker',
-        iconSize: [20, 20],
-        iconAnchor: [10, 10]
-      });
-
-      const marker = window.L.marker([property.lat, property.lng], {
-        icon: customIcon
-      }).addTo(mapInstance);
-
-      // Add popup
-      const popupContent = `
-        <div style="color: #333; padding: 10px; text-align: center; font-family: Vazirmatn;">
-          <h4 style="margin: 0 0 8px 0; color: ${iconColor}; font-size: 14px;">${property.title}</h4>
-          <p style="margin: 0; font-weight: bold; font-size: 12px;">${property.type}: ${property.price}</p>
-          <button style="
-            margin-top: 8px;
-            background: ${iconColor};
-            color: ${property.type === 'فروش' ? '#0d0d0d' : 'white'};
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            cursor: pointer;
-          ">مشاهده جزئیات</button>
-        </div>
-      `;
-
-      marker.bindPopup(popupContent, {
-        maxWidth: 200,
-        className: 'custom-popup'
-      });
-    });
-  }, []);
-
-  // Mapbox functions removed - using single Leaflet map only
 
   const handleFilterChange = (e) => {
     setMapFilters({
@@ -345,12 +112,16 @@ export default function MapSection() {
 
           <div className="interactive-map-container">
             <div className="map-wrapper">
-              <div ref={mapRef} className="leaflet-map" style={{ width: '100%', height: '100%' }}>
-                {/* Leaflet Map will be loaded here */}
+              <div className="leaflet-map" style={{ width: '100%', height: '100%', background: '#1a1a1a', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ textAlign: 'center', color: '#d4af37' }}>
+                  <i className="fas fa-map-marked-alt" style={{ fontSize: '3rem', marginBottom: '1rem' }}></i>
+                  <h3>نقشه تعاملی</h3>
+                  <p>نقشه در نسخه بعدی فعال خواهد شد</p>
+                </div>
               </div>
               
               {/* Loading overlay */}
-              {!isMapLoaded && (
+              {false && (
                 <div className="map-loading-overlay">
                   <div className="map-content">
                     <div className="map-icon">

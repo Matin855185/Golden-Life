@@ -8,7 +8,7 @@ import FeaturedProperties from './components/FeaturedProperties';
 import ServicesSection from './components/ServicesSection';
 import TechniciansSection from './components/TechniciansSection';
 import TrustSection from './components/TrustSection';
-// import MapSection from './components/MapSection';
+import MapSection from './components/MapSection';
 import Footer from './components/Footer';
 import SuccessModal from './components/SuccessModal';
 import ScrollToTop from './components/ScrollToTop';
@@ -22,7 +22,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <FeaturedProperties />
-      {/* <MapSection /> */}
+      <MapSection />
       <ServicesSection />
       <TechniciansSection />
       <TrustSection />
