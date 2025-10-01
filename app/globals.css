@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 /* Import existing Golden Life styles */
-@import url('../styles.css');
+@import url('./styles.css');
 
 /* Navigation Dropdown Styles - New Collaboration Dropdown */
 .nav-dropdown-collaboration {
