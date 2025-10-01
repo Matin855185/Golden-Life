@@ -1,4 +1,4 @@
-import "./global.css";
+import "./globals.css";
 // import { Vazirmatn } from 'next/font/google';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { UserProvider } from './contexts/UserContext';
