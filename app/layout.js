@@ -1,16 +1,16 @@
 import "./globals.css";
-import { Vazirmatn } from 'next/font/google';
+// import { Vazirmatn } from 'next/font/google';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { UserProvider } from './contexts/UserContext';
 
-const vazirmatn = Vazirmatn({
-  subsets: ['arabic'],
-  display: 'swap',
-});
+// const vazirmatn = Vazirmatn({
+//   subsets: ['arabic'],
+//   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+//   display: 'swap',
+// });
 
 export const metadata = {
   title: "Golden Life",
-  description: "بهترین پلتفرم خرید و فروش املاک با خدمات VIP",
   icons: {
     icon: '/icon.png',
     shortcut: '/icon.png',
@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
         ></script>
         <link rel="preload" href="/authentication" as="document" />
       </head>
-      <body className={vazirmatn.className}>
+      <body>
         <LanguageProvider>
           <UserProvider>
             {children}

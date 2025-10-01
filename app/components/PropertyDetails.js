@@ -6,13 +6,8 @@ import Image from 'next/image';
 import LazyImage from './LazyImage';
 import LazySection from './LazySection';
 
-export default function PropertyDetails({ propertyId }) {
-  const [property, setProperty] = useState(null);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
-
-  // داده‌های کامل املاک (همان داده‌های AllProperties + اطلاعات اضافی)
-  const allProperties = [
+// داده‌های کامل املاک (همان داده‌های AllProperties + اطلاعات اضافی) - moved outside component
+const allProperties = [
     {
       id: 1,
       type: 'آپارتمان',
@@ -159,7 +154,12 @@ export default function PropertyDetails({ propertyId }) {
       coordinates: { lat: 35.7919, lng: 51.4696 },
       isVip: true
     }
-  ];
+];
+
+export default function PropertyDetails({ propertyId }) {
+  const [property, setProperty] = useState(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     const foundProperty = allProperties.find(p => p.id === parseInt(propertyId));

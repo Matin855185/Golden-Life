@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function TrustSection() {
   const [currentReview, setCurrentReview] = useState(0);
@@ -122,9 +123,11 @@ export default function TrustSection() {
               border: '3px solid var(--primary-gold)',
               boxShadow: '0 4px 15px rgba(212, 175, 55, 0.4)'
             }}>
-              <img 
+              <Image 
                 src={testimonials[currentReview].avatar} 
                 alt={testimonials[currentReview].author}
+                width={80}
+                height={80}
                 style={{
                   width: '100%',
                   height: '100%',

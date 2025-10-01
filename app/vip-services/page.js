@@ -116,7 +116,7 @@ export default function VipServicesPage() {
         setSelectedTechnician(defaultTech);
       }
     }
-  }, [selectedService]);
+  }, [selectedService, selectedTechnician, technicians]);
 
   // فیلتر تکنسین‌ها بر اساس خدمت انتخابی
   const getAvailableTechnicians = () => {

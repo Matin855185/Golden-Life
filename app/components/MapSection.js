@@ -1,6 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+
+// Sample property data - moved outside component to avoid re-renders
+const properties = [
+  { id: 1, lat: 35.7219, lng: 51.3347, price: '15.5 میلیارد', type: 'فروش', title: 'آپارتمان نیاوران' },
+  { id: 2, lat: 35.7589, lng: 51.4078, price: '12.8 میلیارد', type: 'فروش', title: 'آپارتمان سعادت آباد' },
+  { id: 3, lat: 35.7665, lng: 51.3751, price: '18.2 میلیارد', type: 'فروش', title: 'آپارتمان شهرک غرب' },
+  { id: 4, lat: 35.8058, lng: 51.4264, price: '45 میلیون', type: 'اجاره', title: 'آپارتمان زعفرانیه' },
+];
 
 export default function MapSection() {
   const [mapFilters, setMapFilters] = useState({
@@ -15,14 +23,6 @@ export default function MapSection() {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [currentTileLayer, setCurrentTileLayer] = useState(null);
-
-  // Sample property data
-  const properties = [
-    { id: 1, lat: 35.7219, lng: 51.3347, price: '15.5 میلیارد', type: 'فروش', title: 'آپارتمان نیاوران' },
-    { id: 2, lat: 35.7589, lng: 51.4078, price: '12.8 میلیارد', type: 'فروش', title: 'آپارتمان سعادت آباد' },
-    { id: 3, lat: 35.7665, lng: 51.3751, price: '18.2 میلیارد', type: 'فروش', title: 'آپارتمان شهرک غرب' },
-    { id: 4, lat: 35.8058, lng: 51.4264, price: '45 میلیون', type: 'اجاره', title: 'آپارتمان زعفرانیه' },
-  ];
 
   // Theme detection and listener
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function MapSection() {
         map.remove();
       }
     };
-  }, []);
+  }, [loadLeaflet, map]);
 
   // Update map theme when isDarkMode changes
   useEffect(() => {
@@ -93,10 +93,10 @@ export default function MapSection() {
     
     newTileLayer.addTo(map);
     setCurrentTileLayer(newTileLayer);
-  }, [map, isDarkMode]); // Remove currentTileLayer from dependency array
+  }, [map, isDarkMode, currentTileLayer]);
 
   // Load Leaflet dynamically
-  const loadLeaflet = async () => {
+  const loadLeaflet = useCallback(async () => {
     if (typeof window === 'undefined') return;
     
     // Load Leaflet CSS
@@ -120,9 +120,9 @@ export default function MapSection() {
       // Add small delay to ensure container is ready
       setTimeout(initializeLeafletMap, 100);
     }
-  };
+  }, [initializeLeafletMap]);
 
-  const initializeLeafletMap = () => {
+  const initializeLeafletMap = useCallback(() => {
     if (!mapRef.current || !window.L) {
       console.log('Map container or Leaflet not ready');
       return;
@@ -173,11 +173,11 @@ export default function MapSection() {
     } catch (error) {
       console.error('Error initializing map:', error);
     }
-  };
+  }, [isDarkMode, addPropertyMarkers]);
 
   // initializeMapboxMap removed - now using MapboxMap component
 
-  const addPropertyMarkers = (mapInstance) => {
+  const addPropertyMarkers = useCallback((mapInstance) => {
     properties.forEach(property => {
       // Create custom icon based on property type
       const iconColor = property.type === 'فروش' ? '#d4af37' : '#3498db';
@@ -239,7 +239,7 @@ export default function MapSection() {
         className: 'custom-popup'
       });
     });
-  };
+  }, []);
 
   // Mapbox functions removed - using single Leaflet map only
 

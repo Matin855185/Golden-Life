@@ -67,7 +67,7 @@ export default function ConsultantRegistrationPage() {
       setCurrentSlide((prev) => (prev + 1) % showcaseSlides.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [showcaseSlides.length]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -403,7 +403,7 @@ export default function ConsultantRegistrationPage() {
                       درآمد ماهانه: {story.income} تومان
                     </p>
                     <p style={{ color: '#cccccc', fontSize: '0.9rem', fontStyle: 'italic' }}>
-                      "{story.desc}"
+                      &ldquo;{story.desc}&rdquo;
                     </p>
                   </div>
                 ))}

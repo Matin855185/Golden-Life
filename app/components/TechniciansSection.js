@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function TechniciansSection() {
   const [activeTab, setActiveTab] = useState(0);
@@ -378,9 +379,11 @@ export default function TechniciansSection() {
                     border: '3px solid #d4af37',
                     boxShadow: '0 0 20px rgba(212, 175, 55, 0.3)'
                   }}>
-                    <img 
+                    <Image 
                       src={technician.avatar} 
                       alt={technician.name}
+                      width={80}
+                      height={80}
                       style={{
                         width: '100%',
                         height: '100%',

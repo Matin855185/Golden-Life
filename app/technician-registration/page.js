@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
@@ -70,7 +70,7 @@ export default function TechnicianRegistrationPage() {
   ];
 
   // محاسبه درآمد ماهانه
-  const calculateIncome = () => {
+  const calculateIncome = useCallback(() => {
     if (selectedServices.length > 0) {
       const totalHourlyRate = selectedServices.reduce((total, serviceId) => {
         const service = services.find(s => s.id === serviceId);
@@ -83,12 +83,12 @@ export default function TechnicianRegistrationPage() {
     } else {
       setMonthlyIncome(0);
     }
-  };
+  }, [selectedServices, workingHours]);
 
   // محاسبه خودکار درآمد
   useEffect(() => {
     calculateIncome();
-  }, [selectedServices, workingHours]);
+  }, [selectedServices, workingHours, calculateIncome]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
